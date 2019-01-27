@@ -21,7 +21,7 @@ You can use the styles for your implementation and the given logic.
 
 # Delivery
 
-Create a private repository on your GitHub account and share it with [@glpinto10](https://github.com/glpinto10) as a collaborator. All your code must be on that repository.
+Create a private repository on your GitHub account and share it with [@glpinto10](https://github.com/glpinto10) as a collaborator. All your code must be on that repository and you must include the "production ready" folder on it.
 
 ***
 
