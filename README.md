@@ -15,8 +15,14 @@ The project has 3 files. A html, JavaScript (logic) and CSS (styles) files.
 
 As a FrontEnd developer, you need to understand the fundamentals of web development before using a major framework or showing that you can deal with a big project by your own. Based on that, you must first understand the code of the project and how it works.
 
-Once you understand all the presented code, your task consist on implementing the same project using React JS (https://reactjs.org/). You must keep all the functionalities that the current project has.
+Once you understand all the presented code, your task consist on implementing the same project using [React JS](https://reactjs.org/). You must keep all the functionalities that the current project has.
 
 You can use the styles for your implementation and the given logic.
 
-Feel free to ask and good luck!
+# Delivery
+
+Create a private repository on your GitHub account and share it with [@glpinto10](https://github.com/glpinto10) as a collaborator. All your code must be on that repository.
+
+***
+
+Feel free to ask and good luck! 😄
