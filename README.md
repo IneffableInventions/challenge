@@ -13,15 +13,31 @@ The project has 3 files. A html, JavaScript (logic) and CSS (styles) files.
 
 ## Your task
 
+### FrontEnd developer
+
 As a FrontEnd developer, you need to understand the fundamentals of web development before using a major framework or showing that you can deal with a big project by your own. Based on that, you must first understand the code of the project and how it works.
 
-Once you understand all the presented code, your task consist on implementing the same project using [React JS](https://reactjs.org/). You must keep all the functionalities that the current project has.
+Once you understand all the presented code, your task consist on implementing the same project using [React JS](https://reactjs.org/) or Angular (https://angular.io/). You must keep all the functionalities that the current project has.
 
 You can use the styles for your implementation and the given logic.
 
+### BackEnd developer
+
+As a BackEnd developer you must know how to define user stories or functional requirements. In this case, we want to store the TODOs for reading them later and not losing them when we close the app. Due to this, you must first define which functions are needed for the implementation of all the current functionalities that the app has (except the ones related to calculate the item count and the unchecked count).
+
+For making this possible we firstly suggest you the following:
+
+1) Fork this repository
+2) Define the model of your TODO using [dbdiagram](https://dbdiagram.io/home)
+3) Select the database that you will use between MySQL, PostgreSQL and MongoDB (we suggest you to use MongoDB)
+4) Create the required web services (API REST) using [Node.js](https://nodejs.org/es/) and [Express.js](https://expressjs.com/es/)
+5) Use [Postman](https://www.postman.com/) for storing the invocations of your API and save them in a collection
+6) Upload all of your code to your cloned repository inside a folder named "back", attach an image of your model and the postman collection (you can export it as a JSON file)
+7) If there are additional instructions (like configuring the database) for running the app put them in a README.md inside the folder
+
 # Delivery
 
-Create a private repository on your GitHub account and share it with [@glpinto10](https://github.com/glpinto10) as a collaborator. All your code must be on that repository and you must include the "production ready" folder on it.
+Make a pull request to this repository with all your implemented changes
 
 ***
 
