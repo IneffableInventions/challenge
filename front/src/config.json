@@ -1,0 +1,8 @@
+{
+    "Note": "You can put 'development' or 'production' in state",
+    "state": "production", 
+    "port": 3000,
+    "back_port": 5000,
+    "front_port": 5000,
+    "mongourl": "mongodb://localhost:27017/challange"
+}

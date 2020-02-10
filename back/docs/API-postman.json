@@ -63,14 +63,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:3000/notas/",
+					"raw": "localhost:3000/notas/5e40c8f52d5cbb50f43440e4",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"notas",
-						""
+						"5e40c8f52d5cbb50f43440e4"
 					]
 				}
 			},

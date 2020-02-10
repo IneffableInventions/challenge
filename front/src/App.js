@@ -1,19 +1,64 @@
 import React from "react";
+import axios from "axios";
+import * as config from "./config.json";
 import "./App.css";
 
+const requestURL = config.state === "development" ? `http://localhost:${config.back_port}/notas/` : "/notas/";
+
 class ToDoListApp extends React.Component {
-  constructor(props) {
+    constructor(props) {
     super(props);
+   
     this.state = {
       item_count: 0,
       uncheked_count: 0,
       toDo_items: [],
       isCreatingTodo: false
     };
-
     this.closeModal = this.closeModal.bind(this);
     this.addTodoItem = this.addTodoItem.bind(this);
+
+    this.updateAsyncNotesState();
+
   }
+
+  addTodoItem(text) {
+    if (!text) {
+      this.closeModal();
+      return;
+    }
+    axios
+      .post(
+        requestURL,
+        { text: text },
+        { "Content-Type": "application/json" }
+      )
+      .then(res => {this.updateAsyncNotesState()});
+
+      /* Esta parte de aqui se hace forma sincrona */
+      this.setState({
+        isCreatingTodo: false
+      });
+  }
+
+  deleteTodoItem(id) {
+    axios.delete(requestURL + id).then(res => {this.updateAsyncNotesState()});
+  }
+
+  handleCheckEvent(index) {
+    const new_todo_items = this.state.toDo_items.slice();
+    let current_state = new_todo_items[index].check;
+    new_todo_items[index] = { ...new_todo_items[index], check: !current_state };
+
+    this.setState({
+      toDo_items: new_todo_items,
+      uncheked_count: this.getUncheckedCount(new_todo_items)
+    });
+  }
+
+  /**
+   * Funciónes de apoyo
+   */
 
   showInputModal() {
     this.setState({
@@ -21,61 +66,46 @@ class ToDoListApp extends React.Component {
     });
   }
 
+  updateAsyncNotesState(){
+    this.getAllNotes((notes) => {
+
+      this.compareUncheckedAndMerge(this.state.toDo_items, notes);
+      this.setState({
+        toDo_items: notes,
+        item_count: notes.length,
+        uncheked_count: this.getUncheckedCount(notes),
+      });
+    });
+  }
+
+  getAllNotes(callback) {
+    axios.get(requestURL).then(res => {
+      const new_todo_items = res.data.map(value => {
+        return { text: value.text, id: value._id, check: false };
+      });
+      callback(new_todo_items);
+    });
+  }
+
+
   closeModal() {
     this.setState({
       isCreatingTodo: false
     });
   }
 
-  addTodoItem(text) {
-
-    if (!text){
-      this.closeModal();
-      return;
-    }
-
-    const new_todo_items = this.state.toDo_items.concat(
-      {
-        text: text,
-        check: false
-      });
-
-    this.setState({
-      toDo_items: new_todo_items,
-      item_count: new_todo_items.length,
-      uncheked_count: this.state.uncheked_count + 1,
-      isCreatingTodo: false
-    });
+  getUncheckedCount(todo_items) {
+    let count = 0;
+    for (let todo of todo_items) if (!todo.check) count++;
+    return count;
   }
 
-
-  deleteTodoItem(id){
-    
-    let count = this.state.toDo_items[id].check ? 0 : -1;
-
-    const new_todo_items = this.state.toDo_items.slice();
-    new_todo_items.splice(id, 1);
-
-    this.setState({
-      toDo_items: new_todo_items,
-      item_count: new_todo_items.length,
-      uncheked_count: this.state.uncheked_count + count,
-    });
-
-  }
-
-  handleCheckEvent(index) {
-    const new_todo_items = this.state.toDo_items.slice();
-    let current_state = new_todo_items[index].check;
-    new_todo_items[index] = {...new_todo_items[index], check: !current_state};
-
-    let count = current_state ? 1 : -1;
-
-    this.setState({
-      toDo_items: new_todo_items,
-      uncheked_count: this.state.uncheked_count + count,
-    });
-
+  compareUncheckedAndMerge(oldArray, updateArray){
+    for(let i = 0, j = 0; i < oldArray.length && j < updateArray.length; i++)
+      if(oldArray[i].id === updateArray[j].id){
+        updateArray[j].check = oldArray[i].check;
+        j++;
+      }        
   }
 
   render() {
@@ -84,15 +114,25 @@ class ToDoListApp extends React.Component {
       return (
         <li key={index} className="todo-container">
           <div>
-            <input type="checkbox" className="todo-checkbox" checked={todo_item.check} onChange={() => this.handleCheckEvent(index)} />
+            <input
+              type="checkbox"
+              className="todo-checkbox"
+              checked={todo_item.check}
+              onChange={() => this.handleCheckEvent(index)}
+            />
             {todo_item.text}
-            <button className="todo-delete" onClick={() => this.deleteTodoItem(index)}>X</button>
+            <button
+              className="todo-delete"
+              onClick={() => this.deleteTodoItem(todo_item.id)}
+            >
+              X
+            </button>
           </div>
         </li>
       );
     });
 
-    /* Renderizando junton a los elemntos de la lista creados */
+    /* Renderizando junto a los elemntos de la lista creados */
     return (
       <div className="ToDoListApp">
         <div className="container center">
@@ -107,7 +147,9 @@ class ToDoListApp extends React.Component {
           >
             New TODO
           </button>
-          <ul id="todo-list" className="todo-list">{todo_items}</ul>
+          <ul id="todo-list" className="todo-list">
+            {todo_items}
+          </ul>
         </div>
         <TodoModal
           show={this.state.isCreatingTodo}
@@ -144,7 +186,7 @@ class TodoModal extends React.Component {
     });
   }
 
-  addTodoItem(text){
+  addTodoItem(text) {
     this.props.addTodoItem(text);
     this.setState({
       current_text: ""
