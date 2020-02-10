@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "7c83df40-565b-4e5e-b234-10b648b619ca",
+		"name": "Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create todo note",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"text\": \"Esta es mi primera nota\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/notas",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"notas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las notas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

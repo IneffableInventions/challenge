@@ -1,11 +1,17 @@
 
-const mongoose = require("mongosee");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const express = require('express');
 const app = express();
 
 const notesRoute = require("./routes/notes.route");
+
+/* Database conection*/
+const URL_DATABASE = 'mongodb://localhost:27017/challange';
+mongoose.connect(URL_DATABASE, (err) => {
+    console.error.bind(console, 'MongoDB connection error:');
+})
 
 /* Middelwares */
 app.use(morgan("dev"));
